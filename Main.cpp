@@ -1,13 +1,20 @@
 #include <time.h>
 #include "TrigramGeneration.h"
 
-int main()
+int main(int argc, char* argv[])
 {
 	srand(static_cast<int>(time(NULL)));
 
 	TrigramGeneration trigramGeneration;
 	std::map<std::string, std::vector<std::string>> wordSequences;
-	trigramGeneration.PopulateWordSequences("words.txt", wordSequences);
+	
+	if (argc > 1)
+	{
+		trigramGeneration.PopulateWordSequences(argv[1], wordSequences);
+	}else
+	{
+		trigramGeneration.PopulateWordSequences("words.txt", wordSequences);
+	}
 
 	std::ofstream file;
 	file.open("Generated.txt");
@@ -23,7 +30,7 @@ int main()
 
 		std::string text = seed->first;
 
-		while (words < 1000 || text.back() != '.')
+		while (words < wordSequences.size() || text.back() != '.')
 		{
 			std::string key = trigramGeneration.GetLastWords(text, 2);
 			text += ' ' + trigramGeneration.GetWord(key, wordSequences);

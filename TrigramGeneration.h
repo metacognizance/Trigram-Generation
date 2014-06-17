@@ -33,7 +33,10 @@ struct TrigramGeneration
 					}
 					if (line[i] != ' ')
 					{
-						words[index].push_back(line[i]);
+						if (line[i] != '\n')
+						{
+							words[index].push_back(line[i]);
+						}
 					}else
 					{
 						if (index < 2)
@@ -99,7 +102,7 @@ struct TrigramGeneration
 				break;
 			}
 		}
-		
+
 		if (lastWords.back() == ' ')
 		{
 			lastWords.erase(lastWords.end());
